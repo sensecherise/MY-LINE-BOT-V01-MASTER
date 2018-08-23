@@ -60,7 +60,7 @@ def handle_text_message(event):
         if isinstance(event.source, SourceGroup):
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text='this group id is :'+event.source.groupId)
+                TextSendMessage(text='this group id is :'+event.source.type)
             )
     else:
         if isinstance(event.source, SourceUser):
