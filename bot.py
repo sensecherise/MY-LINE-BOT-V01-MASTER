@@ -71,9 +71,14 @@ def handle_text_message(event):
                 TextSendMessage(text=event.message.text)
             )
 
-# while True:
-#     line_bot_api.push_message()
-#     time.sleep(3600)
+#test linegroup
+while True:
+    line_bot_api.push_message('C8d731f5c4671277e13f9d49259281539', TextSendMessage(text='Hello Why'))
+    time.sleep(30)
+        
+
+#dev linegroup
+
 
 if __name__ == "__main__":
     app.run()
