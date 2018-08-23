@@ -1,3 +1,4 @@
+import time
 from flask import Flask, request, abort
 from linebot import (LineBotApi, WebhookHandler)
 from linebot.exceptions import (InvalidSignatureError)
@@ -43,7 +44,7 @@ def webhook():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
-    if event.message.text == 'profile':
+    if event.message.text == '!profile':
         profile = line_bot_api.get_profile(event.source.user_id)
         line_bot_api.reply_message(
             event.reply_token, [
@@ -55,12 +56,22 @@ def handle_text_message(event):
                 )
             ]
         )
+    elif event.message.text == '!show_groupid':
+        if isinstance(event.source, SourceGroup):
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text='this group id is :'+event.source.groupId)
+            )
     else:
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=event.message.text)
-        )
+        if isinstance(event.source, SourceUser):
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=event.message.text)
+            )
 
+while True:
+    line_bot_api.push_message()
+    time.sleep(3600)
 
 if __name__ == "__main__":
     app.run()
