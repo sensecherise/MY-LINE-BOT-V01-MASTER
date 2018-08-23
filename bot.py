@@ -26,15 +26,15 @@ def webhook():
   #      handler.handle(body, signature)
    # except InvalidSignatureError:
    #     abort(400)
-    if request.method == 'POST':
-        return 'OK'
+    # if request.method == 'POST':
+    return 'OK'
     
 
-@handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text))
+# @handler.add(MessageEvent, message=TextMessage)
+# def handle_message(event):
+#     line_bot_api.reply_message(
+#         event.reply_token,
+#         TextSendMessage(text=event.message.text))
 
 
 if __name__ == "__main__":
