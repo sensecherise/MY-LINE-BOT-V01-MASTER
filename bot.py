@@ -14,15 +14,17 @@ from linebot.models import (
 
 app = Flask(__name__)
 
-line_bot_api = LineBotApi('63bd28fd3a4fdadaa9655de644902fcc')
-handler = WebhookHandler('Py16F9GZePWwoBlq/r7aev30s9SUMYPsP9YAQpr4XBE2skelccadOvgDO8D04HMdNgmrVpu/N0edN8uBHVR36XlErDXbRFW2ODlr2yppKwSbKbhTTIPWe0sek7pzlvwySvDx04TSiPTTJDQAMrYjjgdB04t89/1O/w1cDnyilFU=')
+#handler = WebhookHandler('Py16F9GZePWwoBlq/r7aev30s9SUMYPsP9YAQpr4XBE2skelccadOvgDO8D04HMdNgmrVpu/N0edN8uBHVR36XlErDXbRFW2ODlr2yppKwSbKbhTTIPWe0sek7pzlvwySvDx04TSiPTTJDQAMrYjjgdB04t89/1O/w1cDnyilFU=')
+line_bot_api = LineBotApi('Py16F9GZePWwoBlq/r7aev30s9SUMYPsP9YAQpr4XBE2skelccadOvgDO8D04HMdNgmrVpu/N0edN8uBHVR36XlErDXbRFW2ODlr2yppKwSbKbhTTIPWe0sek7pzlvwySvDx04TSiPTTJDQAMrYjjgdB04t89/1O/w1cDnyilFU=')
+handler = WebhookHandler('63bd28fd3a4fdadaa9655de644902fcc')
 
-@app.route("/")
-def hello():
-    return "Hello World!"
+# @app.route("/")
+# def hello():
+#     return "Hello World!"
 
 @app.route("/webhook", methods=['POST'])
 def webhook():
+
     # get X-Line-Signature header value
     signature = request.headers['X-Line-Signature']
 
@@ -41,26 +43,10 @@ def webhook():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
-    text = event.message.text
-    if text == 'profile':
-    #profile = line_bot_api.get_profile(event.source.user_id)
-        if isinstance(event.source, SourceUser):
-            profile = line_bot_api.get_profile(event.source.user_id)
-            line_bot_api.reply_message(
-            event.reply_token,[
-            TextSendMessage(
-                text='Display name: ' + profile.display_name
-                ),
-            TextSendMessage(
-                text='Status message: '+ profile.status_message
-                    )
-                ]
-            )
-    else:
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text= event.message.text)
-        )
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=event.message.text)
+    )
 
 
 if __name__ == "__main__":
