@@ -58,7 +58,8 @@ def handle_text_message(event):
         )
     elif event.message.text == '!show_groupid':
         if isinstance(event.source, SourceGroup):
-            print(event.source.groupId)
+            print(event.source.type)
+            print(event.source.group_id)
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text='this group id is :'+event.source.type)
