@@ -1,7 +1,16 @@
 from flask import Flask, request, abort
 from linebot import (LineBotApi, WebhookHandler)
 from linebot.exceptions import (InvalidSignatureError)
-from linebot.models import (MessageEvent, TextMessage, TextSendMessage,)
+from linebot.models import (
+    MessageEvent, TextMessage, TextSendMessage,
+    SourceUser, SourceGroup, SourceRoom,
+    TemplateSendMessage, ConfirmTemplate, MessageTemplateAction,
+    ButtonsTemplate, URITemplateAction, PostbackTemplateAction,
+    CarouselTemplate, CarouselColumn, PostbackEvent,
+    StickerMessage, StickerSendMessage, LocationMessage, LocationSendMessage,
+    ImageMessage, VideoMessage, AudioMessage,
+    UnfollowEvent, FollowEvent, JoinEvent, LeaveEvent, BeaconEvent
+    )
 
 app = Flask(__name__)
 
@@ -12,7 +21,7 @@ handler = WebhookHandler('Py16F9GZePWwoBlq/r7aev30s9SUMYPsP9YAQpr4XBE2skelccadOv
 def hello():
     return "Hello World!"
 
-@app.route("/webhook", methods=['GET','POST'])
+@app.route("/webhook", methods=['POST'])
 def webhook():
     # get X-Line-Signature header value
     signature = request.headers['X-Line-Signature']
@@ -31,10 +40,27 @@ def webhook():
     
 
 @handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-     line_bot_api.reply_message(
-         event.reply_token,
-         TextSendMessage(text=event.message.text))
+def handle_text_message(event):
+    text = event.message.text
+    if text == 'profile':
+    #profile = line_bot_api.get_profile(event.source.user_id)
+        if isinstance(event.source, SourceUser):
+            profile = line_bot_api.get_profile(event.source.user_id)
+            line_bot_api.reply_message(
+            event.reply_token,[
+            TextSendMessage(
+                text='Display name: ' + profile.display_name
+                ),
+            TextSendMessage(
+                text='Status message: '+ profile.status_message
+                    )
+                ]
+            )
+    else:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text= event.message.text)
+        )
 
 
 if __name__ == "__main__":
