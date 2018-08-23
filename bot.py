@@ -69,9 +69,9 @@ def handle_text_message(event):
                 TextSendMessage(text=event.message.text)
             )
 
-while True:
-    line_bot_api.push_message()
-    time.sleep(3600)
+# while True:
+#     line_bot_api.push_message()
+#     time.sleep(3600)
 
 if __name__ == "__main__":
     app.run()
