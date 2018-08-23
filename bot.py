@@ -72,11 +72,10 @@ def handle_text_message(event):
             )
 
 #test linegroup
-while True:
-    line_bot_api.push_message('C8d731f5c4671277e13f9d49259281539', 
-    TextSendMessage(text='Hello Why'))
-    time.sleep(30)
-        
+# while True:
+#     line_bot_api.push_message('C8d731f5c4671277e13f9d49259281539', 
+#     TextSendMessage(text='Hello Why'))
+#     time.sleep(30)
 
 #dev linegroup
 
