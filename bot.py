@@ -1,6 +1,7 @@
 import time
 import requests
 import json
+from collections import namedtuple
 from flask import Flask, request, abort
 from linebot import (LineBotApi, WebhookHandler)
 from linebot.exceptions import (InvalidSignatureError)
@@ -71,11 +72,12 @@ def handle_text_message(event):
         response = requests.get(url+'Monitor/CheckAppsStatus')
         # r = response.json()
         # print(r)
-        r = json.loads(response)
+        r = response.json()
+        x = json.loads(r, object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
         if isinstance(event.source, SourceGroup):
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text= r.BotMessage)
+                TextSendMessage(text= x.BotMessage)
             )
     else:
         if isinstance(event.source, SourceUser):
