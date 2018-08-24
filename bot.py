@@ -74,6 +74,8 @@ def handle_text_message(event):
         print(type(r))
         print(r)
         print(r[0])
+        x = r[0]
+        print(x.BotMessage)
         if isinstance(event.source, SourceGroup):
             line_bot_api.reply_message(
                 event.reply_token,
