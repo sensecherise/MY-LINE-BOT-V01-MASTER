@@ -1,4 +1,6 @@
 import time
+import requests
+import json
 from flask import Flask, request, abort
 from linebot import (LineBotApi, WebhookHandler)
 from linebot.exceptions import (InvalidSignatureError)
@@ -15,7 +17,8 @@ from linebot.models import (
 
 app = Flask(__name__)
 
-#handler = WebhookHandler('Py16F9GZePWwoBlq/r7aev30s9SUMYPsP9YAQpr4XBE2skelccadOvgDO8D04HMdNgmrVpu/N0edN8uBHVR36XlErDXbRFW2ODlr2yppKwSbKbhTTIPWe0sek7pzlvwySvDx04TSiPTTJDQAMrYjjgdB04t89/1O/w1cDnyilFU=')
+url = 'https://its.rvp.co.th/it/api/'
+
 line_bot_api = LineBotApi('Py16F9GZePWwoBlq/r7aev30s9SUMYPsP9YAQpr4XBE2skelccadOvgDO8D04HMdNgmrVpu/N0edN8uBHVR36XlErDXbRFW2ODlr2yppKwSbKbhTTIPWe0sek7pzlvwySvDx04TSiPTTJDQAMrYjjgdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('63bd28fd3a4fdadaa9655de644902fcc')
 
@@ -63,6 +66,14 @@ def handle_text_message(event):
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text='this group id is :'+event.source.group_id)
+            )
+    elif event.message.text == '!checkMonitor':
+        response = request.get(url+'Monitor/CheckAppsStatus')
+        jsonstring = json.dumps(response)
+        if isinstance(event.source, SourceGroup):
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text= jsonstring)
             )
     else:
         if isinstance(event.source, SourceUser):
