@@ -74,6 +74,7 @@ def handle_text_message(event):
         # print(r)
         r = response.json()
         x = json.loads(r, object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
+        print(x.BotMessage)
         if isinstance(event.source, SourceGroup):
             line_bot_api.reply_message(
                 event.reply_token,
