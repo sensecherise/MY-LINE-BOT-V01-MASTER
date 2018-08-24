@@ -69,12 +69,12 @@ def handle_text_message(event):
             )
     elif event.message.text == '!checkMonitor':
         response = requests.get(url+'Monitor/CheckAppsStatus')
-        response = response.json()
+        response.json()
         print(response)
         if isinstance(event.source, SourceGroup):
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text= response)
+                TextSendMessage(text= response.BotMessage)
             )
     else:
         if isinstance(event.source, SourceUser):
