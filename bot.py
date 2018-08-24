@@ -68,7 +68,7 @@ def handle_text_message(event):
                 TextSendMessage(text='this group id is :'+event.source.group_id)
             )
     elif event.message.text == '!checkMonitor':
-        response = request.get(url+'Monitor/CheckAppsStatus')
+        response = requests.get(url+'Monitor/CheckAppsStatus')
         response = response.json()
         print(response)
         if isinstance(event.source, SourceGroup):
