@@ -73,7 +73,7 @@ def handle_text_message(event):
         r = response.json()
         print(type(r))
         print(r)
-
+        print(r[0])
         if isinstance(event.source, SourceGroup):
             line_bot_api.reply_message(
                 event.reply_token,
