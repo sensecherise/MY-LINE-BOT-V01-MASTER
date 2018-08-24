@@ -76,7 +76,7 @@ def handle_text_message(event):
         if isinstance(event.source, SourceGroup):
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text= r.BotMessage)
+                TextSendMessage(text= response)
             )
     else:
         if isinstance(event.source, SourceUser):
