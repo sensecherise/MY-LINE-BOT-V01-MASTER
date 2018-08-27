@@ -73,11 +73,13 @@ def handle_text_message(event):
         r = response.json()
         print(type(r))
         print(r)
-        print(r[0])
-        x = r[0]
-        print(x.BotMessage)
+        # print(r[0])
+        # x = r[0]
+        # print(x.BotMessage)
         try:
-            x = json.loads(x)
+            # x = json.loads(x)
+            # print(x.BotMessage)
+            x = json.loads(r)
             print(x.BotMessage)
             if isinstance(event.source, SourceGroup):
                 line_bot_api.reply_message(
