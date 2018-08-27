@@ -100,13 +100,14 @@ i = 0
 # while i < 1000000:
 
 def debugBot():
-    monitorTime = str(now.strftime("%Y-%m-%d %H:%M"))
+
     line_bot_api.push_message('C8d731f5c4671277e13f9d49259281539', 
-    TextSendMessage(text=monitorTime+'\n Hello Why'))
+    TextSendMessage(text='Hello sWhy'))
 
 while True:
+    time.sleep(30)
     debugBot()
-    time.sleep(10)
+
 
 
 #dev linegroup C66e0fc5a2d23607150d592d8396f4832
