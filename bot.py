@@ -96,29 +96,34 @@ def handle_text_message(event):
             )
 
 #test linegroup
-i = 0
+
 # while i < 1000000:
 
-def debugBot():
+# def debugBot():
 
-    line_bot_api.push_message('C8d731f5c4671277e13f9d49259281539', 
-    TextSendMessage(text='Hello sWhy'))
+#     line_bot_api.push_message('C8d731f5c4671277e13f9d49259281539', 
+#     TextSendMessage(text='Hello sWhy'))
 
-while True:
-    time.sleep(30)
-    debugBot()
+# while True:
+#     time.sleep(30)
+#     debugBot()
+
+# i = 0
+# while True:
+#     print(str(i))
+#     i = i + 1
 
 
 
 #dev linegroup C66e0fc5a2d23607150d592d8396f4832
-# while True:
-#       response = requests.get(url+'Monitor/CheckAppsStatus')
-#       response = response.json()
-#       r = response[0]
-#       response_msg = r.get("BotMessage")
-#       line_bot_api.push_message('C66e0fc5a2d23607150d592d8396f4832',
-#       TextSendMessage(text=response_msg))
-#       time.sleep(3600)
+while True:
+      response = requests.get(url+'Monitor/CheckAppsStatus')
+      response = response.json()
+      r = response[0]
+      response_msg = r.get("BotMessage")
+      line_bot_api.push_message('C66e0fc5a2d23607150d592d8396f4832',
+      TextSendMessage(text=response_msg))
+      time.sleep(3600)
 
 
 if __name__ == "__main__":
