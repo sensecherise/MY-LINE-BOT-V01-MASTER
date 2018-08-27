@@ -70,25 +70,16 @@ def handle_text_message(event):
             )
     elif event.message.text == '!checkMonitor':
         response = requests.get(url+'Monitor/CheckAppsStatus')
-        response = response.json()
-
-        print(type(response))
-        print(response)
-        # print(r[0])
-        r = response[0]
-        print(type(r))
-        print(r)
-        # python_obj = json.loads(r)
-        # print(python_obj["BotMessage"])
-        print(r.get("BotMessage"))
+        response = response.json() #to obj
+        r = response[0] #to dict
+        response_msg = r.get("BotMessage")
         try:
             if isinstance(event.source, SourceGroup):
                 line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text= 'haHAA')
+                TextSendMessage(text= response_msg)
             )
-        except Exception as e:
-            print('ERROR :'+ e)
+        except:
             print('ERROR AT CONVERTS')
             if isinstance(event.source, SourceGroup):
                 line_bot_api.reply_message(
