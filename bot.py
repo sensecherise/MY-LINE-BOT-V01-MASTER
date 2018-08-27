@@ -70,6 +70,7 @@ def handle_text_message(event):
             )
     elif event.message.text == '!checkMonitor':
         response = requests.get(url+'Monitor/CheckAppsStatus')
+        print(response)
         response = response.json()
         # r = response.json()
         # print(type(r))
@@ -82,11 +83,11 @@ def handle_text_message(event):
             # print(x.BotMessage)
             # x = json.loads(r)
             response_obj =  json.loads(response)
-            print(response_obj["BotMessage"])
+            # print(response_obj["BotMessage"])
             if isinstance(event.source, SourceGroup):
                 line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text= response_obj["BotMessage"])
+                TextSendMessage(text= 'haHAA')
             )
         except Exception as e:
             print('ERROR :'+ e)
@@ -94,7 +95,7 @@ def handle_text_message(event):
             if isinstance(event.source, SourceGroup):
                 line_bot_api.reply_message(
                     event.reply_token,
-                    TextSendMessage(text = 'error pls try again!')
+                    TextSendMessage(text = 'error please try again!')
                 )
 
     else:
