@@ -80,7 +80,7 @@ def handle_text_message(event):
         print(r)
         # python_obj = json.loads(r)
         # print(python_obj["BotMessage"])
-        print(r[0])
+        print(r.get("BotMessage"))
         try:
             if isinstance(event.source, SourceGroup):
                 line_bot_api.reply_message(
