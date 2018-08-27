@@ -88,7 +88,8 @@ def handle_text_message(event):
                 event.reply_token,
                 TextSendMessage(text= response_obj["BotMessage"])
             )
-        except:
+        except Exception as e:
+            print('ERROR :'+ e)
             print('ERROR AT CONVERTS')
             if isinstance(event.source, SourceGroup):
                 line_bot_api.reply_message(
