@@ -97,7 +97,7 @@ def handle_text_message(event):
 #test linegroup
 i = 0
 # while i < 1000000:
-if True:
+while True:
     debugBot()
 
 def debugBot():
