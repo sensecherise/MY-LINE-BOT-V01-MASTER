@@ -97,13 +97,14 @@ def handle_text_message(event):
 #test linegroup
 i = 0
 # while i < 1000000:
-while True:
-    debugBot()
 
 def debugBot():
     line_bot_api.push_message('C8d731f5c4671277e13f9d49259281539', 
     TextSendMessage(text=' Hello Why1'))
-    
+
+while True:
+    debugBot()
+
 
 #dev linegroup C66e0fc5a2d23607150d592d8396f4832
 # while True:
