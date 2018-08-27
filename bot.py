@@ -75,6 +75,8 @@ def handle_text_message(event):
         print(type(response))
         print(response)
         # print(r[0])
+        r = response[0]
+        print(type(r))
         # x = r[0]
         # print(x.BotMessage)
         try:
