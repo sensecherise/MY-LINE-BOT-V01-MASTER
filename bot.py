@@ -98,7 +98,7 @@ def handle_text_message(event):
 i = 0
 while i < 1000000:
     line_bot_api.push_message('C8d731f5c4671277e13f9d49259281539', 
-    TextSendMessage(text='Hello Why'))
+    TextSendMessage(text=i+' Hello Why'))
     i = i + 1
     time.sleep(30)
     
