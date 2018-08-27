@@ -100,11 +100,11 @@ i = 0
 
 def debugBot():
     line_bot_api.push_message('C8d731f5c4671277e13f9d49259281539', 
-    TextSendMessage(text=' Hello Why1'))
+    TextSendMessage(text=' Hello Why12'))
 
 while True:
     debugBot()
-    time.sleep(5)
+time.sleep(10)
 
 
 #dev linegroup C66e0fc5a2d23607150d592d8396f4832
