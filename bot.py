@@ -70,7 +70,7 @@ def handle_text_message(event):
             )
     elif event.message.text == '!checkMonitor':
         response = requests.get(url+'Monitor/CheckAppsStatus')
-        print(response)
+        response = response.json()
         # r = response.json()
         # print(type(r))
         # print(r)
