@@ -104,7 +104,7 @@ def debugBot():
 
 while True:
     debugBot()
-time.sleep(10)
+    time.sleep(10)
 
 
 #dev linegroup C66e0fc5a2d23607150d592d8396f4832
