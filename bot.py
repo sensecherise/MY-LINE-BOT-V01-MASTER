@@ -76,13 +76,22 @@ def handle_text_message(event):
         print(r[0])
         x = r[0]
         print(x.BotMessage)
-        x = json.loads(x)
-        print(x.BotMessage)
-        if isinstance(event.source, SourceGroup):
-            line_bot_api.reply_message(
+        try:
+            x = json.loads(x)
+            print(x.BotMessage)
+            if isinstance(event.source, SourceGroup):
+                line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text= 'ss')
             )
+        except:
+            print('ERROR AT CONVERTS')
+            if isinstance(event.source, SourceGroup):
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text = 'error pls try again!')
+                )
+
     else:
         if isinstance(event.source, SourceUser):
             line_bot_api.reply_message(
