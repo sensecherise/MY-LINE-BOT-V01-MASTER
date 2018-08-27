@@ -95,12 +95,23 @@ def handle_text_message(event):
             )
 
 #test linegroup
-# while True:
-#     line_bot_api.push_message('C8d731f5c4671277e13f9d49259281539', 
-#     TextSendMessage(text='Hello Why'))
-#     time.sleep(30)
+i = 0
+while True:
+    line_bot_api.push_message('C8d731f5c4671277e13f9d49259281539', 
+    TextSendMessage(text=i+': Hello Why'))
+    i = i + 1
+    time.sleep(3600)
+    
 
-#dev linegroup
+#dev linegroup C66e0fc5a2d23607150d592d8396f4832
+# while True:
+#       response = requests.get(url+'Monitor/CheckAppsStatus')
+#       response = response.json()
+#       r = response[0]
+#       response_msg = r.get("BotMessage")
+#       line_bot_api.push_message('C66e0fc5a2d23607150d592d8396f4832',
+#       TextSendMessage(text=response_msg))
+#       time.sleep(3600)
 
 
 if __name__ == "__main__":
