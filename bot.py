@@ -1,5 +1,6 @@
 import time
 import requests
+import datetime
 import json
 from collections import namedtuple
 from flask import Flask, request, abort
@@ -17,7 +18,7 @@ from linebot.models import (
     )
 
 app = Flask(__name__)
-
+now = datetime.datetime.now()
 url = 'https://its.rvp.co.th/it/api/'
 
 line_bot_api = LineBotApi('Py16F9GZePWwoBlq/r7aev30s9SUMYPsP9YAQpr4XBE2skelccadOvgDO8D04HMdNgmrVpu/N0edN8uBHVR36XlErDXbRFW2ODlr2yppKwSbKbhTTIPWe0sek7pzlvwySvDx04TSiPTTJDQAMrYjjgdB04t89/1O/w1cDnyilFU=')
@@ -99,8 +100,9 @@ i = 0
 # while i < 1000000:
 
 def debugBot():
+    monitorTime = str(now.strftime("%Y-%m-%d %H:%M"))
     line_bot_api.push_message('C8d731f5c4671277e13f9d49259281539', 
-    TextSendMessage(text=' Hello Why12'))
+    TextSendMessage(text=monitorTime+'\n Hello Why'))
 
 while True:
     debugBot()
