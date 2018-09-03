@@ -24,9 +24,9 @@ url = 'https://its.rvp.co.th/it/api/'
 line_bot_api = LineBotApi('Py16F9GZePWwoBlq/r7aev30s9SUMYPsP9YAQpr4XBE2skelccadOvgDO8D04HMdNgmrVpu/N0edN8uBHVR36XlErDXbRFW2ODlr2yppKwSbKbhTTIPWe0sek7pzlvwySvDx04TSiPTTJDQAMrYjjgdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('63bd28fd3a4fdadaa9655de644902fcc')
 
-# @app.route("/")
-# def hello():
-#     return "Hello World!"
+@app.route("/getResponse")
+def hello():
+     return "Hello World!"
 
 @app.route("/webhook", methods=['POST'])
 def webhook():
@@ -116,14 +116,14 @@ def handle_text_message(event):
 
 
 #dev linegroup C66e0fc5a2d23607150d592d8396f4832
-while True:
-      response = requests.get(url+'Monitor/CheckAppsStatus')
-      response = response.json()
-      r = response[0]
-      response_msg = r.get("BotMessage")
-      line_bot_api.push_message('C66e0fc5a2d23607150d592d8396f4832',
-      TextSendMessage(text=response_msg))
-      time.sleep(3600)
+# while True:
+#       response = requests.get(url+'Monitor/CheckAppsStatus')
+#       response = response.json()
+#       r = response[0]
+#       response_msg = r.get("BotMessage")
+#       line_bot_api.push_message('C66e0fc5a2d23607150d592d8396f4832',
+#       TextSendMessage(text=response_msg))
+#       time.sleep(3600)
 
 
 if __name__ == "__main__":
