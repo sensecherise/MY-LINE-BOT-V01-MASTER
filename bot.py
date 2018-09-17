@@ -24,6 +24,12 @@ url = 'https://its.rvp.co.th/it/api/'
 line_bot_api = LineBotApi('Py16F9GZePWwoBlq/r7aev30s9SUMYPsP9YAQpr4XBE2skelccadOvgDO8D04HMdNgmrVpu/N0edN8uBHVR36XlErDXbRFW2ODlr2yppKwSbKbhTTIPWe0sek7pzlvwySvDx04TSiPTTJDQAMrYjjgdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('63bd28fd3a4fdadaa9655de644902fcc')
 
+def shutdown_server():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
+
 @app.route("/getResponse")
 def hello():
      return "Hello World!"
@@ -45,6 +51,7 @@ def webhook():
         abort(400)
     # if request.method == 'POST':
     return 'OK'
+
     
 
 @handler.add(MessageEvent, message=TextMessage)
@@ -95,36 +102,66 @@ def handle_text_message(event):
                 TextSendMessage(text=event.message.text)
             )
 
-#test linegroup
 
-# while i < 1000000:
+#C8d731f5c4671277e13f9d49259281539 test group
+#C66e0fc5a2d23607150d592d8396f4832 dev group
 
-# def debugBot():
+# testgroup = 'C8d731f5c4671277e13f9d49259281539'
+# devgroup = 'C66e0fc5a2d23607150d592d8396f4832'
+# # Time = 35999
 
-#     line_bot_api.push_message('C8d731f5c4671277e13f9d49259281539', 
-#     TextSendMessage(text='Hello sWhy'))
+# try:
+#     response = requests.post(url+'Monitor/CheckAppsStatus')
+#     response = response.json()
+#     r = response[0]
+#     response_msg = r.get("BotMessage")
+#     line_bot_api.push_message(devgroup,
+#     TextSendMessage(text=response_msg))
+#     print('BotStatus:APPs OK')
+# except:
+#     try:
+#         response = requests.post(url+'Monitor/CheckAppsStatus')
+#         response = response.json()
+#         r = response[0]
+#         response_msg = r.get("BotMessage")
+#         line_bot_api.push_message(devgroup,
+#         TextSendMessage(text=response_msg))
+#         print('BotStatus: OK')
+#     except Exception as ex:
+#         template = "An exception of type {0} occured. Arguments:\n{1!r}"
+#         error_status = template.format(type(ex).__name__, ex.args)
+#         print(error_status)
+#         line_bot_api.push_message(devgroup,
+#         TextSendMessage(text='น้องแชปปี้ทำงานผิดพลาด กรุณาตรวจสอบภายหลัง'))
 
-# while True:
-#     time.sleep(30)
-#     debugBot()
 
-# i = 0
-# while True:
-#     print(str(i))
-#     i = i + 1
+# try:
+#     response = requests.post(url+'Monitor/CheckDbjobStatus')
+#     response = response.json()
+#     r = response[0]
+#     response_msg = r.get("BotMessage")
+#     line_bot_api.push_message(devgroup,
+#     TextSendMessage(text=response_msg))
+#     print('BotStatus: DB JOBs OK')
+# except:
+#     try:
+#         response = requests.post(url+'Monitor/CheckDbjobStatus')
+#         response = response.json()
+#         r = response[0]
+#         response_msg = r.get("BotMessage")
+#         line_bot_api.push_message(devgroup,
+#         TextSendMessage(text=response_msg))
+#         print('BotStatus: DB JOBs OK')
+#     except Exception as ex:
+#         template = "An exception of type {0} occured. Arguments:\n{1!r}"
+#         error_status = template.format(type(ex).__name__, ex.args)
+#         print(error_status)
+#         line_bot_api.push_message(devgroup,
+#         TextSendMessage(text='น้องแชปปี้ทำงานผิดพลาด กรุณาตรวจสอบภายหลัง'))
 
-
-
-#dev linegroup C66e0fc5a2d23607150d592d8396f4832
-# while True:
-#       response = requests.get(url+'Monitor/CheckAppsStatus')
-#       response = response.json()
-#       r = response[0]
-#       response_msg = r.get("BotMessage")
-#       line_bot_api.push_message('C66e0fc5a2d23607150d592d8396f4832',
-#       TextSendMessage(text=response_msg))
-#       time.sleep(3600)
+# raise RuntimeError('Not running with the Werkzeug Server')
 
 
 if __name__ == "__main__":
     app.run()
+

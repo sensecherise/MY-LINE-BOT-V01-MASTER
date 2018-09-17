@@ -1,5 +1,4 @@
-# my-line-bot-v01
-เรียนรู้การสร้าง Line bot แบบ บ้านๆ จ้า
+#ChappieBot
 
 # สร้าง virtual env
 python -m venv env
