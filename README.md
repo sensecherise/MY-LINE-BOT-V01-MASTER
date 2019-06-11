@@ -11,3 +11,4 @@ C:\> <venv>\Scripts\activate.bat
 
 # ติดตั้ง package
 pip install -r requirements.txt
+# MY-LINE-BOT-V01-MASTER
