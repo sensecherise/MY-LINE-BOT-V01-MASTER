@@ -76,8 +76,10 @@ def handle_text_message(event):
             # print(event.source.type)
             # print(event.source.group_id)
             line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text='this group id is :'+event.source.group_id)
+                event.reply_token, [
+                    TextSendMessage(text='this group id is :'+event.source.group_id),
+                    TextSendMessage(text='your id is :'+event.source.user_id)
+                ]
             )
     elif event.message.text == '!checkMonitor':
         response = requests.get(url+'Monitor/CheckAppsStatus')
