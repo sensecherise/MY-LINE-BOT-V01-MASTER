@@ -57,7 +57,7 @@ def webhook():
     except InvalidSignatureError:
         abort(400)
     # if request.method == 'POST':
-    return 'OK'
+    return 'OK',200
 
 
 @handler.add(MessageEvent, message=TextMessage)
