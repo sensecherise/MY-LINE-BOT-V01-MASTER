@@ -40,8 +40,10 @@ def shutdown_server():
 @app.route("/getResponse")
 def hello():
      return "Hello World!"
+    
+#methods=['POST']
 
-@app.route("/webhook", methods=['POST'])
+@app.route("/webhook")
 def webhook():
 
     # get X-Line-Signature header value
