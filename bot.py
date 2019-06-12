@@ -21,8 +21,16 @@ app = Flask(__name__)
 now = datetime.datetime.now()
 url = 'https://its.rvp.co.th/it/api/'
 
-line_bot_api = LineBotApi('Py16F9GZePWwoBlq/r7aev30s9SUMYPsP9YAQpr4XBE2skelccadOvgDO8D04HMdNgmrVpu/N0edN8uBHVR36XlErDXbRFW2ODlr2yppKwSbKbhTTIPWe0sek7pzlvwySvDx04TSiPTTJDQAMrYjjgdB04t89/1O/w1cDnyilFU=')
-handler = WebhookHandler('63bd28fd3a4fdadaa9655de644902fcc')
+#chappie
+#line_bot_api = LineBotApi('Py16F9GZePWwoBlq/r7aev30s9SUMYPsP9YAQpr4XBE2skelccadOvgDO8D04HMdNgmrVpu/N0edN8uBHVR36XlErDXbRFW2ODlr2yppKwSbKbhTTIPWe0sek7pzlvwySvDx04TSiPTTJDQAMrYjjgdB04t89/1O/w1cDnyilFU=')
+#khun_sinmai
+line_bot_api = LineBotApi('B7+XD/E492NrBIx9nHNpOwBdTbQ9ZNoayiOKD1ZLZvOqE5QATL9fNzKLy2NyvN0wHpmw3MmZDDj+8N81w8ckhLeE5/Fou1RW5ngnVJQQGlGg2XpP5nptvR1+jYFH2bYOnf5nR/2wJ5RkghN0It2n1QdB04t89/1O/w1cDnyilFU=')
+
+#chappie
+#handler = WebhookHandler('63bd28fd3a4fdadaa9655de644902fcc')
+#khun_sinmai
+handler = WebhookHandler('1271b23fb3f7217041dcaa37548f7bdd')
+
 
 def shutdown_server():
     func = request.environ.get('werkzeug.server.shutdown')
