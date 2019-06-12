@@ -31,7 +31,6 @@ line_bot_api = LineBotApi('B7+XD/E492NrBIx9nHNpOwBdTbQ9ZNoayiOKD1ZLZvOqE5QATL9fN
 #khun_sinmai
 handler = WebhookHandler('1271b23fb3f7217041dcaa37548f7bdd')
 
-
 def shutdown_server():
     func = request.environ.get('werkzeug.server.shutdown')
     if func is None:
@@ -60,7 +59,6 @@ def webhook():
     # if request.method == 'POST':
     return 'OK'
 
-    
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
