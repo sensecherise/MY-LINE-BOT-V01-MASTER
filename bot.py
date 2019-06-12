@@ -43,7 +43,7 @@ def hello():
     
 #methods=['POST']
 
-@app.route("/webhook")
+@app.route("/webhook", methods=['GET', 'POST'])
 def webhook():
 
     # get X-Line-Signature header value
