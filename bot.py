@@ -64,11 +64,14 @@ def webhook():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
-    if event.message.text.find('!regis') == true:
+    words = event.message.text
+    if '!regis' in words:
         line_bot_api.reply_message(
-            TextSendMessage(
-                text='test send data'
-            )
+            event.reply_token, [
+                TextSendMessage(
+                    text='test'
+                )
+            ]
         )
 
     
