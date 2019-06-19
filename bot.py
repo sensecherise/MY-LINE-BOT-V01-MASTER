@@ -2,6 +2,7 @@ import time
 import requests
 import datetime
 import json
+import string
 from collections import namedtuple
 from flask import Flask, request, abort
 from linebot import (LineBotApi, WebhookHandler)
