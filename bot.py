@@ -66,15 +66,26 @@ def webhook():
 def handle_text_message(event):
     words = event.message.text
     if '!regis' in words:
-        line_bot_api.reply_message(
-            event.reply_token, [
-                TextSendMessage(
-                    text='test'
-                )
-            ]
-        )
+        words.replace('!regis','')
+        words.replace(' ','')
+        
+        if len(words) == 6:
+            line_bot_api.reply_message(
+                event.reply_token, [
+                    TextSendMessage(
+                        text=words
+                    )
+                ]
+            )
+        else:
+            line_bot_api.reply_message(
+                event.reply_token, [
+                    TextSendMessage(
+                        text='Failed registration format'
+                    )
+                ]
+            )
 
-    
     if event.message.text == '!profile':
         profile = line_bot_api.get_profile(event.source.user_id)
         line_bot_api.reply_message(
