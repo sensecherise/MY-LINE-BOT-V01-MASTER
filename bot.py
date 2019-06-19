@@ -64,7 +64,7 @@ def webhook():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
-    if event.message.text.find('!regis'):
+    if event.message.text.find('!regis') == true:
         line_bot_api.reply_message(
             TextSendMessage(
                 text='test send data'
