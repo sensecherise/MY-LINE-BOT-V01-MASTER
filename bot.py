@@ -64,6 +64,14 @@ def webhook():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
+    if event.message.text.find('!regis'):
+        line_bot_api.reply_message(
+            TextSendMessage(
+                text='test send data'
+            )
+        )
+
+    
     if event.message.text == '!profile':
         profile = line_bot_api.get_profile(event.source.user_id)
         line_bot_api.reply_message(
