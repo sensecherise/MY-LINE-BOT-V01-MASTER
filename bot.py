@@ -67,8 +67,8 @@ def webhook():
 def handle_text_message(event):
     words = event.message.text
     if '!regis' in words:
-        words.replace('!regis','')
-        words.replace(' ','')
+        words = words.replace('!regis','')
+        words = words.replace(' ','')
         
         if len(words) == 6:
             line_bot_api.reply_message(
