@@ -72,6 +72,7 @@ def webhook():
 def handle_text_message(event):
     words = event.message.text
     if '!regis' in words:
+        profile = line_bot_api.get_profile(event.source.user_id)
         words = words.replace('!regis','')
         words = words.replace(' ','')
         
@@ -80,6 +81,9 @@ def handle_text_message(event):
                 event.reply_token, [
                     TextSendMessage(
                         text=words
+                    ),
+                    TextSendMessage(
+                        text='user '+ profile.display_name +' line id : '+ event.source.user_id
                     )
                 ]
             )
@@ -87,7 +91,10 @@ def handle_text_message(event):
             line_bot_api.reply_message(
                 event.reply_token, [
                     TextSendMessage(
-                        text='!'+words
+                        text='Wrong Registration Format'
+                    ),
+                    TextSendMessage(
+                        text='user '+ profile.display_name +' line id : '+ event.source.user_id
                     )
                 ]
             )
