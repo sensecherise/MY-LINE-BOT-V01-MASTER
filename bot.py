@@ -96,11 +96,11 @@ def handle_text_message(event):
             MessageResponse = ''
             
             dataResponse_Status = dataResponse.get('Status')
-            print(dataResponse_Status)
+            print('1.'+dataResponse_Status)
             if dataResponse_Status == 1:
                 dataResponse_Data = dataResponse.get('Data')
                 data_registerstatus = dataResponse_Data['RegisterStatus']
-                print(data_registerstatus)
+                print('2.'+data_registerstatus)
 
                 if data_registerstatus ==  1:
                     MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nรหัสพนักงาน '+words +'\nเสร็จสมบูรณ์'       
