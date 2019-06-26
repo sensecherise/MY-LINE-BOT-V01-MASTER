@@ -89,6 +89,8 @@ def handle_text_message(event):
                 'AccessToken': accesstoken,
             }
             
+            print(params)
+            
             api_key = 'UlZQLklULklUNC4wLjEyMzQ1Iw=='
             
             dataResponse = requests.post(url+'LINEManagement/CL_LINERegister?api_key='+api_key, params)
