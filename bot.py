@@ -27,7 +27,8 @@ url = 'https://its.rvp.co.th/it/api/'
 #khun_sinmai
 #line_bot_api = LineBotApi('B7+XD/E492NrBIx9nHNpOwBdTbQ9ZNoayiOKD1ZLZvOqE5QATL9fNzKLy2NyvN0wHpmw3MmZDDj+8N81w8ckhLeE5/Fou1RW5ngnVJQQGlGg2XpP5nptvR1+jYFH2bYOnf5nR/2wJ5RkghN0It2n1QdB04t89/1O/w1cDnyilFU=')
 #rvp
-line_bot_api = LineBotApi('x+slzRC7b27fT1CbP0n1W4jsfniVlpWaw2hHDrUiBhbLxZ9eNqcmsplXgO4G1FsHLWPcotN8F6uysU4yAHXS+0G4+rQul2Tnli+ea/HvB+l8HVnoN9SEZyvXqxDVj7nDxUffzPKKJTzqdBXMZ5qsUwdB04t89/1O/w1cDnyilFU=')
+accesstoken = 'x+slzRC7b27fT1CbP0n1W4jsfniVlpWaw2hHDrUiBhbLxZ9eNqcmsplXgO4G1FsHLWPcotN8F6uysU4yAHXS+0G4+rQul2Tnli+ea/HvB+l8HVnoN9SEZyvXqxDVj7nDxUffzPKKJTzqdBXMZ5qsUwdB04t89/1O/w1cDnyilFU='
+line_bot_api = LineBotApi(accesstoken)
 
 
 #chappie
@@ -35,7 +36,8 @@ line_bot_api = LineBotApi('x+slzRC7b27fT1CbP0n1W4jsfniVlpWaw2hHDrUiBhbLxZ9eNqcms
 #khun_sinmai
 #handler = WebhookHandler('1271b23fb3f7217041dcaa37548f7bdd')
 #rvp
-handler = WebhookHandler('f375e3fce9c1ac3548f0f40d4ef8238d')
+channelsecret = 'f375e3fce9c1ac3548f0f40d4ef8238d'
+handler = WebhookHandler(channelsecret)
 
 def shutdown_server():
     func = request.environ.get('werkzeug.server.shutdown')
@@ -70,6 +72,7 @@ def webhook():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
+    
     words = event.message.text
     if '!regis' in words:
         profile = line_bot_api.get_profile(event.source.user_id)
@@ -77,13 +80,39 @@ def handle_text_message(event):
         words = words.replace(' ','')
         
         if len(words) == 6:
+            
+            params = {
+                'EmpId': words,
+                'UserId': event.source.user_id,
+                'BotName': "@rvpinsurance",
+                'ChannelSecret': channelsecret,
+                'AccessToken': accesstoken,
+            }
+            
+            api_key = 'UlZQLklULklUNC4wLjEyMzQ1Iw=='
+            
+            dataResponse = requests.post(url+'AccidentDeadCaseNotify/GetAccidentDeadCaseNotifyByAccNo?api_key='+api_key, params)
+            dataResponse = dataResponse.json()
+            MessageResponse = ''
+            
+            dataResponse_Status = dataResponse.get('Status')
+            if dataResponse_Status == 1:
+                dataResponse_Data = dataResponse.get('Data')
+                data_registerstatus = dataResponse_Data['RegisterStatus']
+
+                if data_registerstatus ==  1:
+                    MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nรหัสพนักงาน '+words +'\nเสร็จสมบูรณ์'       
+                elif data_registerstatus == -1:
+                    MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nรหัสพนักงาน '+words +'\nมีการลงทะเบียนด้วยไลน์ไอดีนี้ไปแล้ว \nลงทะเบียนไม่สมบูรณ์'
+                elif data_registerstatus == -2:
+                    MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nรหัสพนักงาน '+words +'\nมีการลงทะเบียนด้วยรหัสพนักงานนี้ไปแล้ว \nลงทะเบียนไม่สมบูรณ์'
+                else:
+                    MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nรหัสพนักงาน '+words +'\nไม่มีรหัสพนักงานนี้ในระบบ \nลงทะเบียนไม่สมบูรณ์'
+            
             line_bot_api.reply_message(
                 event.reply_token, [
                     TextSendMessage(
-                        text=words
-                    ),
-                    TextSendMessage(
-                        text='user '+ profile.display_name +' line id : '+ event.source.user_id
+                        text=MessageResponse
                     )
                 ]
             )
@@ -91,10 +120,7 @@ def handle_text_message(event):
             line_bot_api.reply_message(
                 event.reply_token, [
                     TextSendMessage(
-                        text='Wrong Registration Format'
-                    ),
-                    TextSendMessage(
-                        text='user '+ profile.display_name +' line id : '+ event.source.user_id
+                        text='รูปแบบการสมัครของคุณ '+ profile.display_name+' ไม่ถูกต้อง'
                     )
                 ]
             )
