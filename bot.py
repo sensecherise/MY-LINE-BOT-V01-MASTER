@@ -173,12 +173,12 @@ def handle_text_message(event):
                     TextSendMessage(text = 'error please try again!')
                 )
 
-    else:
-        if isinstance(event.source, SourceUser):
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=event.message.text)
-            )
+#     else:
+#         if isinstance(event.source, SourceUser):
+#             line_bot_api.reply_message(
+#                 event.reply_token,
+#                 TextSendMessage(text=event.message.text)
+#             )
 
 
 #C8d731f5c4671277e13f9d49259281539 test group
