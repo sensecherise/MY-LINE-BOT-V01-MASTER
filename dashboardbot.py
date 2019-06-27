@@ -65,9 +65,6 @@ def handle_text_message(event):
                 ),
                 TextSendMessage(
                     text='Status message: ' + profile.status_message
-                ),
-                TextSendMessage(
-                    text='Line id: '+ event.source.user_id
                 )
             ]
         )
@@ -111,84 +108,41 @@ def handle_text_message(event):
 # Cad886fdebdc0a1de6eda6ad809a62a6a monitor group
 
 testgroup = 'C8d731f5c4671277e13f9d49259281539'
-selfid = 'Ucf3afd60234d7148a13aef99176b463c'
 devgroup = 'C66e0fc5a2d23607150d592d8396f4832'
 monitorgroup = 'Cad886fdebdc0a1de6eda6ad809a62a6a'
 # Time = 35999
 
-
-
-def getAppData():
-    response = requests.post(url+'Monitor/CheckAppsStatus')
+def getDashboardData():
+    response = requests.post(url+'Monitor/CheckDashboardJob')
     response = response.json()
     response_json = response[0]
     return response_json
 
-def getDbjobData():
-    response = requests.post(url+'Monitor/CheckDbjobStatus')
-    response = response.json()
-    response_json = response[0]
-    return response_json
-
-def sendAppData(group_line):
+def sendDashboardData(group_line):
     try:
-        response = getAppData()
+        response = getDashboardData()
         response_check = response.get("Validate")
         response_msg = response.get("BotMessage")
         if(response_check != "T"):
             time.sleep(65)
-            response = getAppData()
+            response = getDashboardData()
             response_check = response.get("Validate")
             response_msg = response.get("BotMessage")
             if(response_check == "T"):
                 line_bot_api.push_message(group_line,
                 TextSendMessage(text=response_msg))
-                print('BotStatus:APPs OK')
+                print('BotStatus:Dashboard OK')
                 return True
             else:
                 response_msg = "Cannot get data from API"
                 line_bot_api.push_message(group_line,
-                TextSendMessage(text=response_msg))
-                print('BotStatus:APPs Cannot get data from API')
+                TextSendMessage(text = response_msg))
+                print('BotStatus:Dashboard Cannot get data from API')
                 return False
         else:
             line_bot_api.push_message(group_line,
             TextSendMessage(text=response_msg))
-            print('BotStatus:APPs OK')
-            return True
-    except Exception as ex:
-        template = "An exception of type {0} occured. Arguments:\n{1!r}"
-        error_status = template.format(type(ex).__name__, ex.args)
-        print(error_status)
-        line_bot_api.push_message(group_line,
-        TextSendMessage(text='น้องแชปปี้ทำงานผิดพลาด กรุณาตรวจสอบภายหลัง :)'))
-        return False
-
-def sendDbjobData(group_line):
-    try:
-        response = getDbjobData()
-        response_check = response.get("Validate")
-        response_msg = response.get("BotMessage")
-        if(response_check != "T"):
-            time.sleep(65)
-            response = getDbjobData()
-            response_check = response.get("Validate")
-            response_msg = response.get("BotMessage")
-            if(response_check == "T"):
-                line_bot_api.push_message(group_line,
-                TextSendMessage(text=response_msg))
-                print('BotStatus: DB JOBs OK')
-                return True
-            else:
-                response_msg = "Cannot get data from API"
-                line_bot_api.push_message(group_line,
-                TextSendMessage(text=response_msg))
-                print('BotStatus:DbJOB Cannot get data from API')
-                return False
-        else:
-            line_bot_api.push_message(group_line,
-            TextSendMessage(text=response_msg))
-            print('BotStatus: DB JOBs OK')
+            print('BotStatus:Dashboard OK')
             return True
     except Exception as ex:
         template = "An exception of type {0} occured. Arguments:\n{1!r}"
@@ -199,19 +153,14 @@ def sendDbjobData(group_line):
         return False
 
 try:
-    groupLine = selfid
-    appCheck = sendAppData(groupLine)
-    dbCheck = sendDbjobData(groupLine)
-    while(appCheck == False or dbCheck == False):
+    groupLine = testgroup
+    dashboardCheck = sendDashboardData(groupLine)
+    while(dashboardCheck == False):
         time.sleep(300)
-        #ถ้ายังมีข้อความใด False ให้ส่งข้อมูลใหม่ใน 5 นาทีถัดไป
-        if(appCheck == False):
-            appCheck = sendAppData(groupLine)
-        if(dbCheck == False):
-            dbCheck = sendDbjobData(groupLine)
+        dashboardCheck = sendDashboardData(groupLine)
 except Exception as ex:
     template = "An exception of type {0} occured. Arguments:\n{1!r}"
-    error_status = template.format(type(ex).__name__, ex.args)
+    error_status = template.format(type(ex).__name__, ex.args)   
     print(error_status)
 
 raise RuntimeError('Not running with the Werkzeug Server') 
