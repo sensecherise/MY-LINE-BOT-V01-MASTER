@@ -5,9 +5,9 @@
 
 # run python บน virtual env
 *   Linux and OSX
-    *   `source ./env/bin/activate`
+    * `source ./env/bin/activate`
 *    Windows
-    *   `C:\> <venv>\Scripts\activate.bat`
+    * `C:\> <venv>\Scripts\activate.bat`
 
 # ติดตั้ง package
 `pip install -r requirements.txt`
