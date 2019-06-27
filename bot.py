@@ -39,6 +39,8 @@ line_bot_api = LineBotApi(accesstoken)
 channelsecret = 'f375e3fce9c1ac3548f0f40d4ef8238d'
 handler = WebhookHandler(channelsecret)
 
+bottestgroup = 'Cbe8afa803412d3558dffcc9a1a8c4a71'
+
 def shutdown_server():
     func = request.environ.get('werkzeug.server.shutdown')
     if func is None:
@@ -107,19 +109,23 @@ def handle_text_message(event):
                 if data_registerstatus ==  '1':
                     MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nรหัสพนักงาน '+words +'\nเสร็จสมบูรณ์'       
                 elif data_registerstatus == '-1':
-                    MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nมีการลงทะเบียนด้วยไลน์ไอดีนี้ไปแล้ว \nลงทะเบียนไม่สมบูรณ์'
+                    MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nมีการลงทะเบียนด้วยไลน์ไอดีนี้ไปแล้ว \nการลงทะเบียนไม่สมบูรณ์'
                 elif data_registerstatus == '-2':
-                    MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nรหัสพนักงาน '+words +'\nมีการลงทะเบียนด้วยรหัสพนักงานนี้ไปแล้ว \nลงทะเบียนไม่สมบูรณ์'
+                    MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nรหัสพนักงาน '+words +'\nมีการลงทะเบียนด้วยรหัสพนักงานนี้ไปแล้ว \nการลงทะเบียนไม่สมบูรณ์'
                 elif data_registerstatus == '-3':
-                    MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nรหัสพนักงาน '+words +'\nไม่มีรหัสพนักงานนี้ในระบบ \nลงทะเบียนไม่สมบูรณ์'
-            
-                line_bot_api.reply_message(
-                    event.reply_token, [
-                        TextSendMessage(
-                            text=MessageResponse
-                        )
-                    ]
-                )
+                    MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nไม่มีรหัสพนักงานนี้ในระบบ \nการลงทะเบียนไม่สมบูรณ์'
+                
+                try: 
+                    line_bot_api.reply_message(
+                        event.reply_token, [
+                            TextSendMessage(
+                                text=MessageResponse
+                            )
+                        ]
+                    )
+                except:
+                    line_bot_api.push_message(bottestgroup,
+                    TextSendMessage(text='กรุณาเพิ่มเพื่อนกับบอทไลน์'))
         else:
             line_bot_api.reply_message(
                 event.reply_token, [
