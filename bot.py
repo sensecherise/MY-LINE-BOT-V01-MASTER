@@ -95,7 +95,7 @@ def handle_text_message(event):
             dataResponse = requests.post(url+'LINEManagement/CL_LINERegister?api_key='+api_key, params)
             dataResponse = dataResponse.json()
             print(dataResponse)
-            MessageResponse = ''
+            MessageResponse = 'ไม่สามารถทำรายการได้'
             
             dataResponse_Status = dataResponse.get('Status')
             print(dataResponse_Status)
