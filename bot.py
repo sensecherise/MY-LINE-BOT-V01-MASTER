@@ -107,7 +107,7 @@ def handle_text_message(event):
                 if data_registerstatus ==  '1':
                     MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nรหัสพนักงาน '+words +'\nเสร็จสมบูรณ์'       
                 elif data_registerstatus == '-1':
-                    MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nรหัสพนักงาน '+words +'\nมีการลงทะเบียนด้วยไลน์ไอดีนี้ไปแล้ว \nลงทะเบียนไม่สมบูรณ์'
+                    MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nมีการลงทะเบียนด้วยไลน์ไอดีนี้ไปแล้ว \nลงทะเบียนไม่สมบูรณ์'
                 elif data_registerstatus == '-2':
                     MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nรหัสพนักงาน '+words +'\nมีการลงทะเบียนด้วยรหัสพนักงานนี้ไปแล้ว \nลงทะเบียนไม่สมบูรณ์'
                 elif data_registerstatus == '-3':
