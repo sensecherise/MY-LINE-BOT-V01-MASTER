@@ -99,18 +99,18 @@ def handle_text_message(event):
             
             dataResponse_Status = dataResponse.get('Status')
             print(dataResponse_Status)
-            if dataResponse_Status == 1:
+            if dataResponse_Status == '1':
                 dataResponse_Data = dataResponse.get('Data')
                 data_registerstatus = dataResponse_Data['RegisterStatus']
                 print(data_registerstatus)
 
-                if data_registerstatus ==  1:
+                if data_registerstatus ==  '1':
                     MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nรหัสพนักงาน '+words +'\nเสร็จสมบูรณ์'       
-                elif data_registerstatus == -1:
+                elif data_registerstatus == '-1':
                     MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nรหัสพนักงาน '+words +'\nมีการลงทะเบียนด้วยไลน์ไอดีนี้ไปแล้ว \nลงทะเบียนไม่สมบูรณ์'
-                elif data_registerstatus == -2:
+                elif data_registerstatus == '-2':
                     MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nรหัสพนักงาน '+words +'\nมีการลงทะเบียนด้วยรหัสพนักงานนี้ไปแล้ว \nลงทะเบียนไม่สมบูรณ์'
-                elif data_registerstatus == -3:
+                elif data_registerstatus == '-3':
                     MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nรหัสพนักงาน '+words +'\nไม่มีรหัสพนักงานนี้ในระบบ \nลงทะเบียนไม่สมบูรณ์'
             
             line_bot_api.reply_message(
