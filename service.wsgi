@@ -1,4 +1,4 @@
 import sys
-sys.path.insert(0, '/var/www/html/CL_LineBot')
+sys.path.insert(0, '/var/www/html/app')
 
-from myapp import botregister as application
+from botregister import app as application
