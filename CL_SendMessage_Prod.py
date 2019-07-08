@@ -14,7 +14,7 @@ from linebot.models import (
     ButtonsTemplate, URITemplateAction, PostbackTemplateAction,
     CarouselTemplate, CarouselColumn, PostbackEvent,
     StickerMessage, StickerSendMessage, LocationMessage, LocationSendMessage,
-    ImageMessage, VideoMessage, AudioMessage,
+    ImageMessage, ImageSendMessage, VideoMessage, AudioMessage,
     UnfollowEvent, FollowEvent, JoinEvent, LeaveEvent, BeaconEvent
     )
 
@@ -181,6 +181,14 @@ def sendLineBotMessage(accno):
                     latitude=Lat,
                     longitude=Lng)
                 )
+
+                line_bot_api.push_message(user,
+                    ImageSendMessage(
+                    original_content_url= dataResponse_Message['Img'],
+                    preview_image_url= dataResponse_Message['Img'])
+                )
+
+
 
         print(accno+' data already sent')
 

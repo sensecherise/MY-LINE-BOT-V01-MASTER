@@ -14,7 +14,7 @@ from linebot.models import (
     ButtonsTemplate, URITemplateAction, PostbackTemplateAction,
     CarouselTemplate, CarouselColumn, PostbackEvent,
     StickerMessage, StickerSendMessage, LocationMessage, LocationSendMessage,
-    ImageMessage, VideoMessage, AudioMessage,
+    ImageMessage, ImageSendMessage, VideoMessage, AudioMessage,
     UnfollowEvent, FollowEvent, JoinEvent, LeaveEvent, BeaconEvent
     )
 
@@ -247,7 +247,7 @@ def sendLineBotMessage(group_line, accno):
         dataResponse = requests.post(url+'AccidentDeadCaseNotify/GetAccidentDeadCaseNotifyByAccNo?api_key='+api_key, params)
 
         dataResponse = dataResponse.json()
-        print(dataResponse)
+        #print(dataResponse)
         dataResponse_Message = dataResponse.get('Data')
 
         getusers = dataResponse_Message['UserID']
@@ -273,6 +273,8 @@ def sendLineBotMessage(group_line, accno):
 
         #print(dataResponse_Message['Message'])
 
+        print(dataResponse_Message['Img'])
+
         line_bot_api.push_message(group_line,
         TextSendMessage(text=dataResponse_Message['Message']))
 
@@ -282,6 +284,14 @@ def sendLineBotMessage(group_line, accno):
             latitude=Lat,
             longitude=Lng)
         )
+
+        line_bot_api.push_message(group_line,
+            ImageSendMessage(
+            original_content_url= dataResponse_Message['Img'],
+            preview_image_url= dataResponse_Message['Img'])
+        )
+
+        
 
 
         print(accno+' data already sent')
