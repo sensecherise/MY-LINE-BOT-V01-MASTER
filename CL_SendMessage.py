@@ -23,11 +23,11 @@ now = datetime.datetime.now()
 url = 'https://its.rvp.co.th/it/api/'
 
 #channel access token
-accesstoken = 'B7+XD/E492NrBIx9nHNpOwBdTbQ9ZNoayiOKD1ZLZvOqE5QATL9fNzKLy2NyvN0wHpmw3MmZDDj+8N81w8ckhLeE5/Fou1RW5ngnVJQQGlGg2XpP5nptvR1+jYFH2bYOnf5nR/2wJ5RkghN0It2n1QdB04t89/1O/w1cDnyilFU='
+accesstoken = 'x+slzRC7b27fT1CbP0n1W4jsfniVlpWaw2hHDrUiBhbLxZ9eNqcmsplXgO4G1FsHLWPcotN8F6uysU4yAHXS+0G4+rQul2Tnli+ea/HvB+l8HVnoN9SEZyvXqxDVj7nDxUffzPKKJTzqdBXMZ5qsUwdB04t89/1O/w1cDnyilFU='
 line_bot_api = LineBotApi(accesstoken)
 
 #Channel Secret
-channelsecret = '1271b23fb3f7217041dcaa37548f7bdd'
+channelsecret = 'f375e3fce9c1ac3548f0f40d4ef8238d'
 handler = WebhookHandler(channelsecret)
 
 
@@ -37,6 +37,7 @@ selfid2 = 'Uab42081cfb8085f0ef1dc89a1c9a4cfb'
 devgroup = 'C66e0fc5a2d23607150d592d8396f4832'
 monitorgroup = 'Cad886fdebdc0a1de6eda6ad809a62a6a'
 testbotgroup = 'C5a0fabf0a6a6666cd7038edf76f4885a'
+testbotgroup2 = 'Cbe8afa803412d3558dffcc9a1a8c4a71'
 
 def shutdown_server():
     func = request.environ.get('werkzeug.server.shutdown')
@@ -299,7 +300,7 @@ def sendLineBotMessage(group_line, accno):
         dataResponse = requests.post(url+'AccidentDeadCaseNotify/GetAccidentDeadCaseNotifyByAccNo?api_key='+api_key, params)
 
         dataResponse = dataResponse.json()
-        print(dataResponse)
+        #print(dataResponse)
         dataResponse_Message = dataResponse.get('Data')
 
         getusers = dataResponse_Message['UserID']
@@ -323,6 +324,7 @@ def sendLineBotMessage(group_line, accno):
         #         line_bot_api.push_message(user,
         #         TextSendMessage(text=dataResponse_Message['Message']))
 
+        print(dataResponse_Message['Message'])
 
         line_bot_api.push_message(group_line,
         TextSendMessage(text=dataResponse_Message['Message']))
@@ -380,7 +382,7 @@ try:
 
     if len(response_Data) > 0:
         for Acc_Data in response_Data:
-            sendLineBotMessage(testbotgroup, Acc_Data["AccNo"])
+            sendLineBotMessage(testbotgroup2, Acc_Data["AccNo"])
     
     
 except Exception as ex:
