@@ -218,7 +218,7 @@ try:
 
     params = {}  
 
-    response = requests.post(url+'AccidentDeadCaseNotify/GetAccidentDeadCaseNotifyCases', headers=header)
+    response = requests.post(url+'AccidentDeadCaseNotify/GetAccidentDeadCaseNotifyCases_Prod', headers=header)
     response = response.json()
 
 
