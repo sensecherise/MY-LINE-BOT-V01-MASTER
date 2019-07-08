@@ -87,10 +87,10 @@ def handle_text_message(event):
                 )
             ]
         )
-    elif '!regis' in words:
+    elif 'ลงทะเบียน:' in words:
         if isinstance(event.source, SourceGroup):
             profile = line_bot_api.get_profile(event.source.user_id)
-            words = words.replace('!regis','')
+            words = words.replace('ลงทะเบียน:','')
             words = words.replace(' ','')
 
             if len(words) == 6:
