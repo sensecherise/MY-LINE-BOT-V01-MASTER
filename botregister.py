@@ -78,7 +78,16 @@ def webhook():
 def handle_text_message(event):
     
     words = event.message.text
-    if '!regis' in words:
+    if 'สวัสดี' in words:
+        profile = line_bot_api.get_profile(event.source.user_id)
+        line_bot_api.reply_message(
+            event.reply_token, [
+                TextSendMessage(
+                    text='สวัสดีค่ะ, \n' + event.source.user_id
+                )
+            ]
+        )
+    elif '!regis' in words:
         if isinstance(event.source, SourceGroup):
             profile = line_bot_api.get_profile(event.source.user_id)
             words = words.replace('!regis','')
