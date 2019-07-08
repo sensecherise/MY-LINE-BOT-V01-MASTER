@@ -247,7 +247,7 @@ def sendLineBotMessage(group_line, accno):
         dataResponse = requests.post(url+'AccidentDeadCaseNotify/GetAccidentDeadCaseNotifyByAccNo?api_key='+api_key, params)
 
         dataResponse = dataResponse.json()
-        #print(dataResponse)
+        print(dataResponse)
         dataResponse_Message = dataResponse.get('Data')
 
         getusers = dataResponse_Message['UserID']
@@ -271,7 +271,7 @@ def sendLineBotMessage(group_line, accno):
         #         line_bot_api.push_message(user,
         #         TextSendMessage(text=dataResponse_Message['Message']))
 
-        print(dataResponse_Message['Message'])
+        #print(dataResponse_Message['Message'])
 
         line_bot_api.push_message(group_line,
         TextSendMessage(text=dataResponse_Message['Message']))
