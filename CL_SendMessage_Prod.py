@@ -169,6 +169,16 @@ def sendLineBotMessage(accno):
         else:
             Lng = float(dataResponse_Message['Lng'])
 
+        log = requests.post(url+'AccidentDeadCaseNotify/SaveSendLog?api_key='+api_key, params)
+        log = log.json()
+        log_Status = log.get('Status')
+        if log_Status == 1:
+            print(accno+ ' logged already')
+        else:
+            print(accno+ ' logged undone')
+
+        #requests.post(url+'AccidentDeadCaseNotify/UpdateAccidentDeadCaseNotify?api_key='+api_key)
+
         if len(users) > 0:
             for user in users:
                 line_bot_api.push_message(user,
@@ -181,26 +191,20 @@ def sendLineBotMessage(accno):
                     latitude=Lat,
                     longitude=Lng)
                 )
-
-                line_bot_api.push_message(user,
-                    ImageSendMessage(
-                    original_content_url= dataResponse_Message['Img'],
-                    preview_image_url= dataResponse_Message['Img'])
-                )
+                
+                if (len(dataResponse_Message['Img']) > 0):
+                    line_bot_api.push_message(user,
+                        ImageSendMessage(
+                        original_content_url= dataResponse_Message['Img'],
+                        preview_image_url= dataResponse_Message['Img'])
+                    )
 
 
 
         print(accno+' data already sent')
 
-        #requests.post(url+'AccidentDeadCaseNotify/UpdateAccidentDeadCaseNotify?api_key='+api_key)
 
-        log = requests.post(url+'AccidentDeadCaseNotify/SaveSendLog?api_key='+api_key, params)
-        log = log.json()
-        log_Status = log.get('Status')
-        if log_Status == 1:
-            print(accno+ ' logged already')
-        else:
-            print(accno+ ' logged undone')
+       
     except Exception as ex:
         template = "An exception of type {0} occured. Arguments:\n{1!r}"
         error_status = template.format(type(ex).__name__, ex.args)

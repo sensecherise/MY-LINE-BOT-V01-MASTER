@@ -88,64 +88,63 @@ def handle_text_message(event):
             ]
         )
     elif 'ลงทะเบียน:' in words:
-        if isinstance(event.source, SourceGroup):
-            profile = line_bot_api.get_profile(event.source.user_id)
-            words = words.replace('ลงทะเบียน:','')
-            words = words.replace(' ','')
+        profile = line_bot_api.get_profile(event.source.user_id)
+        words = words.replace('ลงทะเบียน:','')
+        words = words.replace(' ','')
 
-            if len(words) == 6:
+        if len(words) == 6:
 
-                params = {
-                    'EmpId': words,
-                    'UserId': event.source.user_id,
-                    'BotName': "@rvpinsurance",
-                    'ChannelSecret': channelsecret,
-                    'AccessToken': accesstoken,
-                }
+            params = {
+                'EmpId': words,
+                'UserId': event.source.user_id,
+                'BotName': "@rvpinsurance",
+                'ChannelSecret': channelsecret,
+                'AccessToken': accesstoken,
+            }
 
 
-                api_key = 'UlZQLklULklUNC4wLjEyMzQ1Iw=='
+            api_key = 'UlZQLklULklUNC4wLjEyMzQ1Iw=='
 
-                dataResponse = requests.post(url+'LINEManagement/CL_LINERegister?api_key='+api_key, params)
-                dataResponse = dataResponse.json()
-                print(dataResponse)
-                MessageResponse = 'ไม่สามารถทำรายการได้'
+            dataResponse = requests.post(url+'LINEManagement/CL_LINERegister?api_key='+api_key, params)
+            dataResponse = dataResponse.json()
+            print(dataResponse)
+            MessageResponse = 'ไม่สามารถทำรายการได้'
 
-                dataResponse_Status = dataResponse.get('Status')
-                print(dataResponse_Status)
-                if dataResponse_Status == 1:
-                    dataResponse_Data = dataResponse.get('Data')
-                    data_registerstatus = dataResponse_Data['RegisterStatus']
-                    print(data_registerstatus)
+            dataResponse_Status = dataResponse.get('Status')
+            print(dataResponse_Status)
+            if dataResponse_Status == 1:
+                dataResponse_Data = dataResponse.get('Data')
+                data_registerstatus = dataResponse_Data['RegisterStatus']
+                print(data_registerstatus)
 
-                    if data_registerstatus ==  '1':
-                        MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nรหัสพนักงาน '+words +'\nการลงทะเบียนเสร็จสมบูรณ์'       
-                    elif data_registerstatus == '-1':
-                        MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nมีการลงทะเบียนด้วยไลน์ไอดีนี้ไปแล้ว \nการลงทะเบียนไม่สมบูรณ์'
-                    elif data_registerstatus == '-2':
-                        MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nรหัสพนักงาน '+words +'\nมีการลงทะเบียนด้วยรหัสพนักงานนี้ไปแล้ว \nการลงทะเบียนไม่สมบูรณ์'
-                    elif data_registerstatus == '-3':
-                        MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nไม่มีรหัสพนักงานนี้ในระบบ \nการลงทะเบียนไม่สมบูรณ์'
+                if data_registerstatus ==  '1':
+                    MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nรหัสพนักงาน '+words +'\nการลงทะเบียนเสร็จสมบูรณ์'       
+                elif data_registerstatus == '-1':
+                    MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nมีการลงทะเบียนด้วยไลน์ไอดีนี้ไปแล้ว \nการลงทะเบียนไม่สมบูรณ์'
+                elif data_registerstatus == '-2':
+                    MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nรหัสพนักงาน '+words +'\nมีการลงทะเบียนด้วยรหัสพนักงานนี้ไปแล้ว \nการลงทะเบียนไม่สมบูรณ์'
+                elif data_registerstatus == '-3':
+                    MessageResponse = 'การสมัครของคุณ '+ profile.display_name+' \nไม่มีรหัสพนักงานนี้ในระบบ \nการลงทะเบียนไม่สมบูรณ์'
 
-                    try: 
-                        line_bot_api.reply_message(
-                            event.reply_token, [
-                                TextSendMessage(
-                                    text=MessageResponse
-                                )
-                            ]
-                        )
-                    except:
-                        line_bot_api.push_message(bottestgroup,
-                        TextSendMessage(text='กรุณาเพิ่มเพื่อนกับบอทไลน์'))
-            else:
-                line_bot_api.reply_message(
-                    event.reply_token, [
-                        TextSendMessage(
-                            text='รูปแบบการสมัครของคุณ '+ profile.display_name+' ไม่ถูกต้อง'
-                        )
-                    ]
-                )
+                try: 
+                    line_bot_api.reply_message(
+                        event.reply_token, [
+                            TextSendMessage(
+                                text=MessageResponse
+                            )
+                        ]
+                    )
+                except:
+                    line_bot_api.push_message(bottestgroup,
+                    TextSendMessage(text='กรุณาเพิ่มเพื่อนกับบอทไลน์'))
+        else:
+            line_bot_api.reply_message(
+                event.reply_token, [
+                    TextSendMessage(
+                        text='รูปแบบการสมัครของคุณ '+ profile.display_name+' ไม่ถูกต้อง'
+                    )
+                ]
+            )
 
     if event.message.text == '!profile':
         profile = line_bot_api.get_profile(event.source.user_id)
