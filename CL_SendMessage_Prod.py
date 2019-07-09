@@ -192,6 +192,8 @@ def sendLineBotMessage(accno):
 
         print(accno+' data already sent')
 
+        requests.post(url+'AccidentDeadCaseNotify/UpdateAccidentDeadCaseNotify?api_key='+api_key)
+
         log = requests.post(url+'AccidentDeadCaseNotify/SaveSendLog?api_key='+api_key, params)
         log = log.json()
         log_Status = log.get('Status')
@@ -217,7 +219,7 @@ try:
     
 
     params = {}  
-
+    #response = requests.post(url+'AccidentDeadCaseNotify/GetAccidentDeadCaseNotifyCases', headers=header)
     response = requests.post(url+'AccidentDeadCaseNotify/GetAccidentDeadCaseNotifyCases_Prod', headers=header)
     response = response.json()
 
@@ -230,7 +232,6 @@ try:
 
 
     # 62/300/0001363
-    # sendLineBotMessage(testbotgroup, '62/300/0001363')
 
 
     if len(response_Data) > 0:
