@@ -239,6 +239,7 @@ def sendLineBotMessage(group_line, accno):
         
         params = {
             'AccNo': accno,
+            'UserId': group_line
         }
 
         api_key = 'UlZQLklULklUNC4wLjEyMzQ1Iw=='
@@ -262,18 +263,27 @@ def sendLineBotMessage(group_line, accno):
             Lng = 1
         else:
             Lng = float(dataResponse_Message['Lng'])
-        # print(users)
-        # print(users[0])
-        # print(len(users))
+        
 
-        # if len(users) > 0:
-        #     for user in users:
-        #         line_bot_api.push_message(user,
-        #         TextSendMessage(text=dataResponse_Message['Message']))
+        line_bot_api.push_message(group_line,
+        TextSendMessage(text=dataResponse_Message['Message']))
 
-        #print(dataResponse_Message['Message'])
+        if Lat == 1 and Lng == 1:
+            line_bot_api.push_message(group_line,
+                LocationSendMessage(title='จุดเกิดเหตุของรับแจ้ง'+ accno, 
+                address=dataResponse_Message['Address'], 
+                latitude=Lat,
+                longitude=Lng)
+            )
 
-        #print(dataResponse_Message['Img'])
+        if(len(dataResponse_Message['Img']) > 0):
+            line_bot_api.push_message(group_line,
+                ImageSendMessage(
+                original_content_url= dataResponse_Message['Img'],
+                preview_image_url= dataResponse_Message['Img'])
+            )
+        
+        print(accno+' data already sent')
 
         log = requests.post(url+'AccidentDeadCaseNotify/SaveSendLog?api_key='+api_key, params)
         log = log.json()
@@ -283,27 +293,7 @@ def sendLineBotMessage(group_line, accno):
         else:
             print(accno+ ' logged undone')
 
-        line_bot_api.push_message(group_line,
-        TextSendMessage(text=dataResponse_Message['Message']))
 
-        line_bot_api.push_message(group_line,
-            LocationSendMessage(title='จุดเกิดเหตุของรับแจ้ง'+ accno, 
-            address=dataResponse_Message['Address'], 
-            latitude=Lat,
-            longitude=Lng)
-        )
-
-        if(len(dataResponse_Message['Img']) > 0):
-            line_bot_api.push_message(group_line,
-                ImageSendMessage(
-                original_content_url= dataResponse_Message['Img'],
-                preview_image_url= dataResponse_Message['Img'])
-            )
-
-        
-
-
-        print(accno+' data already sent')
 
        
     except Exception as ex:
@@ -343,6 +333,8 @@ try:
     if len(response_Data) > 0:
         for Acc_Data in response_Data:
             sendLineBotMessage(testbotgroup2, Acc_Data["AccNo"])
+    else:
+        print('no case(s) response')
     
     
 except Exception as ex:

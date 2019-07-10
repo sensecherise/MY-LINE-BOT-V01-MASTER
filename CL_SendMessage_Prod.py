@@ -70,57 +70,57 @@ def webhook():
 
     
 
-@handler.add(MessageEvent, message=TextMessage)
-def handle_text_message(event):
+# @handler.add(MessageEvent, message=TextMessage)
+# def handle_text_message(event):
 
-    if event.message.text == '!profile':
-        profile = line_bot_api.get_profile(event.source.user_id)
-        line_bot_api.reply_message(
-            event.reply_token, [
-                TextSendMessage(
-                    text='Display name: '+ profile.display_name
-                ),
-                TextSendMessage(
-                    text='Status message: ' + profile.status_message
-                ),
-                TextSendMessage(
-                    text='Line id: '+ event.source.user_id
-                )
-            ]
-        )
-    elif event.message.text == '!show_groupid':
-        if isinstance(event.source, SourceGroup):
-            # print(event.source.type)
-            # print(event.source.group_id)
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text='this group id is :'+event.source.group_id)
-            )
-    elif event.message.text == '!checkMonitor':
-        try:
-            response = requests.get(url+'Monitor/CheckAppsStatus')
-            response = response.json() #to obj
-            r = response[0] #to dict
-            response_msg = r.get("BotMessage")
-            if isinstance(event.source, SourceGroup):
-                line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text= response_msg)
-            )
-        except:
-            print('ERROR AT CONVERTS')
-            if isinstance(event.source, SourceGroup):
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    TextSendMessage(text = 'error please try again!')
-                )
+#     if event.message.text == '!profile':
+#         profile = line_bot_api.get_profile(event.source.user_id)
+#         line_bot_api.reply_message(
+#             event.reply_token, [
+#                 TextSendMessage(
+#                     text='Display name: '+ profile.display_name
+#                 ),
+#                 TextSendMessage(
+#                     text='Status message: ' + profile.status_message
+#                 ),
+#                 TextSendMessage(
+#                     text='Line id: '+ event.source.user_id
+#                 )
+#             ]
+#         )
+#     elif event.message.text == '!show_groupid':
+#         if isinstance(event.source, SourceGroup):
+#             # print(event.source.type)
+#             # print(event.source.group_id)
+#             line_bot_api.reply_message(
+#                 event.reply_token,
+#                 TextSendMessage(text='this group id is :'+event.source.group_id)
+#             )
+#     elif event.message.text == '!checkMonitor':
+#         try:
+#             response = requests.get(url+'Monitor/CheckAppsStatus')
+#             response = response.json() #to obj
+#             r = response[0] #to dict
+#             response_msg = r.get("BotMessage")
+#             if isinstance(event.source, SourceGroup):
+#                 line_bot_api.reply_message(
+#                 event.reply_token,
+#                 TextSendMessage(text= response_msg)
+#             )
+#         except:
+#             print('ERROR AT CONVERTS')
+#             if isinstance(event.source, SourceGroup):
+#                 line_bot_api.reply_message(
+#                     event.reply_token,
+#                     TextSendMessage(text = 'error please try again!')
+#                 )
 
-    else:
-        if isinstance(event.source, SourceUser):
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=event.message.text)
-            )
+#     else:
+#         if isinstance(event.source, SourceUser):
+#             line_bot_api.reply_message(
+#                 event.reply_token,
+#                 TextSendMessage(text=event.message.text)
+#             )
 
 
 # C8d731f5c4671277e13f9d49259281539 test group
@@ -142,7 +142,6 @@ def sendLineBotMessage(accno):
         #     'Content-Type': 'application/json',
         #     'Authorization-Token': 'UlZQLklULklUNC4wLjEyMzQ1Iw==',
         # }
-        
         params = {
             'AccNo': accno,
         }
@@ -175,6 +174,10 @@ def sendLineBotMessage(accno):
 
         if len(users) > 0:
             for user in users:
+                params = {
+                    'AccNo': accno,
+                    'UserId': user,
+                }
                 line_bot_api.push_message(user,
                 TextSendMessage(text=dataResponse_Message['Message']))
 
@@ -192,19 +195,21 @@ def sendLineBotMessage(accno):
                         original_content_url= dataResponse_Message['Img'],
                         preview_image_url= dataResponse_Message['Img'])
                     )
+                
+                log = requests.post(url+'AccidentDeadCaseNotify/SaveSendLog?api_key='+api_key, params)
+                log = log.json()
+                log_Status = log.get('Status')
+                if log_Status == 1:
+                    print(accno+ ' logged already')
+                else:
+                    print(accno+ ' logged undone')
 
-        log = requests.post(url+'AccidentDeadCaseNotify/SaveSendLog?api_key='+api_key, params)
-        log = log.json()
-        log_Status = log.get('Status')
-        if log_Status == 1:
-            print(accno+ ' logged already')
+            print(accno+' data already sent')
+        
         else:
-            print(accno+ ' logged undone')
-
-        print(accno+' data already sent')
+            print(accno+ 'no target user to send data')
 
 
-       
     except Exception as ex:
         template = "An exception of type {0} occured. Arguments:\n{1!r}"
         error_status = template.format(type(ex).__name__, ex.args)
@@ -241,6 +246,8 @@ try:
     if len(response_Data) > 0:
         for Acc_Data in response_Data:
             sendLineBotMessage(Acc_Data["AccNo"])
+    else:
+        print('no case(s) response')
     
     
 except Exception as ex:
