@@ -232,10 +232,10 @@ def sendDbjobData(group_line):
 def sendLineBotMessage(group_line, accno):
     try:
 
-        header = {
-            'Content-Type': 'application/json',
-            'Authorization-Token': 'UlZQLklULklUNC4wLjEyMzQ1Iw==',
-        }
+        # header = {
+        #     'Content-Type': 'application/json',
+        #     'Authorization-Token': 'UlZQLklULklUNC4wLjEyMzQ1Iw==',
+        # }
         
         params = {
             'AccNo': accno,
