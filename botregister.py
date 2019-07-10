@@ -44,11 +44,11 @@ handler = WebhookHandler(channelsecret)
 
 bottestgroup = 'Cbe8afa803412d3558dffcc9a1a8c4a71'
 
-def shutdown_server():
-    func = request.environ.get('werkzeug.server.shutdown')
-    if func is None:
-        raise RuntimeError('Not running with the Werkzeug Server')
-    func()
+# def shutdown_server():
+#     func = request.environ.get('werkzeug.server.shutdown')
+#     if func is None:
+#         raise RuntimeError('Not running with the Werkzeug Server')
+#     func()
 
 @app.route("/getResponse")
 def hello():
