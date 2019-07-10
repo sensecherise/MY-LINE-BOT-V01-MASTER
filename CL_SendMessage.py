@@ -268,13 +268,12 @@ def sendLineBotMessage(group_line, accno):
         line_bot_api.push_message(group_line,
         TextSendMessage(text=dataResponse_Message['Message']))
 
-        if Lat == 1 and Lng == 1:
-            line_bot_api.push_message(group_line,
-                LocationSendMessage(title='จุดเกิดเหตุของรับแจ้ง'+ accno, 
-                address=dataResponse_Message['Address'], 
-                latitude=Lat,
-                longitude=Lng)
-            )
+        line_bot_api.push_message(group_line,
+            LocationSendMessage(title='จุดเกิดเหตุของรับแจ้ง'+ accno, 
+            address=dataResponse_Message['Address'], 
+            latitude=Lat,
+            longitude=Lng)
+        )
 
         if(len(dataResponse_Message['Img']) > 0):
             line_bot_api.push_message(group_line,

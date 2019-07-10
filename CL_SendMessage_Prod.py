@@ -181,13 +181,13 @@ def sendLineBotMessage(accno):
                 line_bot_api.push_message(user,
                 TextSendMessage(text=dataResponse_Message['Message']))
 
-                if Lat == 1 and Lng == 1:
-                    line_bot_api.push_message(user,
-                        LocationSendMessage(title='จุดเกิดเหตุของรับแจ้ง'+ accno, 
-                        address=dataResponse_Message['Address'], 
-                        latitude=Lat,
-                        longitude=Lng)
-                    )
+
+                line_bot_api.push_message(user,
+                    LocationSendMessage(title='จุดเกิดเหตุของรับแจ้ง'+ accno, 
+                    address=dataResponse_Message['Address'], 
+                    latitude=Lat,
+                    longitude=Lng)
+                )
                 
                 if (len(dataResponse_Message['Img']) > 0):
                     line_bot_api.push_message(user,
