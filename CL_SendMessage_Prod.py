@@ -169,13 +169,7 @@ def sendLineBotMessage(accno):
         else:
             Lng = float(dataResponse_Message['Lng'])
 
-        log = requests.post(url+'AccidentDeadCaseNotify/SaveSendLog?api_key='+api_key, params)
-        log = log.json()
-        log_Status = log.get('Status')
-        if log_Status == 1:
-            print(accno+ ' logged already')
-        else:
-            print(accno+ ' logged undone')
+        
 
         #requests.post(url+'AccidentDeadCaseNotify/UpdateAccidentDeadCaseNotify?api_key='+api_key)
 
@@ -184,13 +178,13 @@ def sendLineBotMessage(accno):
                 line_bot_api.push_message(user,
                 TextSendMessage(text=dataResponse_Message['Message']))
 
-
-                line_bot_api.push_message(user,
-                    LocationSendMessage(title='จุดเกิดเหตุของรับแจ้ง'+ accno, 
-                    address=dataResponse_Message['Address'], 
-                    latitude=Lat,
-                    longitude=Lng)
-                )
+                if Lat == 1 and Lng == 1:
+                    line_bot_api.push_message(user,
+                        LocationSendMessage(title='จุดเกิดเหตุของรับแจ้ง'+ accno, 
+                        address=dataResponse_Message['Address'], 
+                        latitude=Lat,
+                        longitude=Lng)
+                    )
                 
                 if (len(dataResponse_Message['Img']) > 0):
                     line_bot_api.push_message(user,
@@ -199,7 +193,13 @@ def sendLineBotMessage(accno):
                         preview_image_url= dataResponse_Message['Img'])
                     )
 
-
+        log = requests.post(url+'AccidentDeadCaseNotify/SaveSendLog?api_key='+api_key, params)
+        log = log.json()
+        log_Status = log.get('Status')
+        if log_Status == 1:
+            print(accno+ ' logged already')
+        else:
+            print(accno+ ' logged undone')
 
         print(accno+' data already sent')
 
