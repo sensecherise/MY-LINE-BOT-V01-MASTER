@@ -178,24 +178,35 @@ def sendLineBotMessage(accno):
                     'AccNo': accno,
                     'UserId': user,
                 }
-                line_bot_api.push_message(user,
-                TextSendMessage(text=dataResponse_Message['Message']))
-
-
-                line_bot_api.push_message(user,
-                    LocationSendMessage(title='จุดเกิดเหตุของรับแจ้ง'+ accno, 
-                    address=dataResponse_Message['Address'], 
-                    latitude=Lat,
-                    longitude=Lng)
-                )
-                
-                if (len(dataResponse_Message['Img']) > 0):
+                try:
                     line_bot_api.push_message(user,
-                        ImageSendMessage(
-                        original_content_url= dataResponse_Message['Img'],
-                        preview_image_url= dataResponse_Message['Img'])
-                    )
+                    TextSendMessage(text=dataResponse_Message['Message']))
+                except Exception as ex:
+                    line_bot_api.push_message(user,
+                    TextSendMessage(text='ไม่สามารถส่งข้อมูลรับแจ้ง '+ accno+' ได้'))
                 
+                try:
+                    line_bot_api.push_message(user,
+                        LocationSendMessage(title='จุดเกิดเหตุของรับแจ้ง'+ accno, 
+                        address=dataResponse_Message['Address'], 
+                        latitude=Lat,
+                        longitude=Lng)
+                    )
+                except Exception as ex:
+                    line_bot_api.push_message(user,
+                    TextSendMessage(text='ไม่สามารถส่งข้อมูลพิกัดของรับแจ้ง '+ accno +' ได้'))
+
+                try:
+                    if (len(dataResponse_Message['Img']) > 0):
+                        line_bot_api.push_message(user,
+                            ImageSendMessage(
+                            original_content_url= dataResponse_Message['Img'],
+                            preview_image_url= dataResponse_Message['Img'])
+                        )
+                except Exception as ex:
+                    line_bot_api.push_message(user,
+                    TextSendMessage(text='ไม่สามารถส่งข้อมูลรูปภาพของรับแจ้ง '+ accno +' ได้'))
+
                 log = requests.post(url+'AccidentDeadCaseNotify/SaveSendLog?api_key='+api_key, params)
                 log = log.json()
                 log_Status = log.get('Status')
