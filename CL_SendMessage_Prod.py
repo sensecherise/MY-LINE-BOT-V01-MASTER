@@ -207,13 +207,13 @@ def sendLineBotMessage(accno):
                     line_bot_api.push_message(user,
                     TextSendMessage(text='ไม่สามารถส่งข้อมูลรูปภาพของรับแจ้ง '+ accno +' ได้'))
 
-                log = requests.post(url+'AccidentDeadCaseNotify/SaveSendLog?api_key='+api_key, params)
-                log = log.json()
-                log_Status = log.get('Status')
-                if log_Status == 1:
-                    print(accno+ ' logged already')
-                else:
-                    print(accno+ ' logged undone')
+            log = requests.post(url+'AccidentDeadCaseNotify/SaveSendLog?api_key='+api_key, params)
+            log = log.json()
+            log_Status = log.get('Status')
+            if log_Status == 1:
+                print(accno+ ' logged already')
+            else:
+                print(accno+ ' logged undone')
 
             print(accno+' data already sent')
         
