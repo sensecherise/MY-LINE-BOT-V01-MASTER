@@ -31,6 +31,7 @@ accesstoken = 'Py16F9GZePWwoBlq/r7aev30s9SUMYPsP9YAQpr4XBE2skelccadOvgDO8D04HMdN
 line_bot_api = LineBotApi(accesstoken)
 
 
+
 #chappie
 channelsecret = '63bd28fd3a4fdadaa9655de644902fcc'
 #khun_sinmai
