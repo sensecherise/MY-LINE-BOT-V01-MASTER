@@ -187,8 +187,8 @@ def sendLineBotMessage(accno):
                 
                 try:
                     line_bot_api.push_message(user,
-                        LocationSendMessage(title='จุดเกิดเหตุของรับแจ้ง'+ accno, 
-                        address=dataResponse_Message['Address'], 
+                        LocationSendMessage(title='จุดเกิดเหตุของรับแจ้ง'+ accno +' '+dataResponse_Message['Address'], 
+                        # address=dataResponse_Message['Address'], 
                         latitude=Lat,
                         longitude=Lng)
                     )
