@@ -264,13 +264,14 @@ def sendLineBotMessage(group_line, accno):
         else:
             Lng = float(dataResponse_Message['Lng'])
         
-
+        
+        addressMessage = dataResponse_Message['Address']
         line_bot_api.push_message(group_line,
         TextSendMessage(text=dataResponse_Message['Message']))
 
         line_bot_api.push_message(group_line,
             LocationSendMessage(title='จุดเกิดเหตุของรับแจ้ง'+ accno, 
-            address=dataResponse_Message['Address'], 
+            address=addressMessage[0:99], 
             latitude=Lat,
             longitude=Lng)
         )
@@ -327,13 +328,19 @@ try:
 
     # 62/300/0001363
     # sendLineBotMessage(testbotgroup, '62/300/0001363')
+    # Acc_Data["AccNo"]
+    # 62/003/0151282
+    # 62/740/0002956
+    # 62/003/0153387
 
+    # if len(response_Data) > 0:
+    #     for Acc_Data in response_Data:
+    #         sendLineBotMessage(testbotgroup2, '62/003/0153387')
+    # else:
+    #     print('no case(s) response')
 
-    if len(response_Data) > 0:
-        for Acc_Data in response_Data:
-            sendLineBotMessage(testbotgroup2, Acc_Data["AccNo"])
-    else:
-        print('no case(s) response')
+    sendLineBotMessage(testbotgroup2, '62/003/0153387')
+
     
     
 except Exception as ex:

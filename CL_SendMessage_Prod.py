@@ -186,9 +186,11 @@ def sendLineBotMessage(accno):
                     TextSendMessage(text='ไม่สามารถส่งข้อมูลรับแจ้ง '+ accno+' ได้'))
                 
                 try:
+                    addressMessage = 'จุดเกิดเหตุของรับแจ้ง'+ accno + ' '+dataResponse_Message['Address']
                     line_bot_api.push_message(user,
-                        LocationSendMessage(title='จุดเกิดเหตุของรับแจ้ง'+ accno +' '+dataResponse_Message['Address'], 
+                        # LocationSendMessage(title='จุดเกิดเหตุของรับแจ้ง'+ accno +' '+dataResponse_Message['Address'], 
                         # address=dataResponse_Message['Address'], 
+                        LocationSendMessage(title=addressMessage[0:99],
                         latitude=Lat,
                         longitude=Lng)
                     )
