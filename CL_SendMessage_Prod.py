@@ -184,6 +184,13 @@ def sendLineBotMessage(accno):
                 except Exception as ex:
                     line_bot_api.push_message(user,
                     TextSendMessage(text='ไม่สามารถส่งข้อมูลรับแจ้ง '+ accno+' ได้'))
+
+                try:
+                    line_bot_api.push_message(user,
+                    TextSendMessage(text=dataResponse_Message['LinkMsg']))
+                except Exception as ex:
+                    line_bot_api.push_message(user,
+                    TextSendMessage(text='ไม่สามารถส่งลิ้งข้อมูลรับแจ้งของ '+ accno +' ได้'))
                 
                 try:
                     addressMessage = 'จุดเกิดเหตุของรับแจ้ง'+ accno + ' '+dataResponse_Message['Address']
