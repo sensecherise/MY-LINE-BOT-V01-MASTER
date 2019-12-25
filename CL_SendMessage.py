@@ -252,7 +252,7 @@ def sendLineBotMessage(group_line, accno):
         dataResponse_Message = dataResponse.get('Data')
 
         getusers = dataResponse_Message['UserID']
-        users = [x.strip() for x in getusers.split(',')]
+        #users = [x.strip() for x in getusers.split(',')]
 
         if dataResponse_Message['Lat'] == '':
             Lat = 1
@@ -268,6 +268,13 @@ def sendLineBotMessage(group_line, accno):
         addressMessage = dataResponse_Message['Address']
         line_bot_api.push_message(group_line,
         TextSendMessage(text=dataResponse_Message['Message']))
+
+        try:
+            line_bot_api.push_message(group_line,
+            TextSendMessage(title=dataResponse_Message['LinkMsg']))
+        except Exception as ex:
+            line_bot_api.push_message(group_line,
+            TextSendMessage(text='ไม่สามารถส่งลิ้งข้อมูลรับแจ้งของ '+ accno +' ได้'))
 
         line_bot_api.push_message(group_line,
             LocationSendMessage(title='จุดเกิดเหตุของรับแจ้ง'+ accno, 
@@ -339,7 +346,7 @@ try:
     # else:
     #     print('no case(s) response')
 
-    sendLineBotMessage(testbotgroup2, '62/003/0153387')
+    sendLineBotMessage(testbotgroup2, '62/003/0212608')
 
     
     
